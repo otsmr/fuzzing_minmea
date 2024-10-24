@@ -4,6 +4,12 @@ enable_testing()
 
 project(minmea)
 
+find_program(AFL_C_COMPILER afl-clang-fast)
+find_program(AFL_CXX_COMPILER afl-clang-fast++)
+
+set(CMAKE_C_COMPILER ${AFL_C_COMPILER})
+set(CMAKE_CXX_COMPILER ${AFL_CXX_COMPILER})
+
 find_package(Threads REQUIRED) # Workaround for https://github.com/libcheck/check/issues/48#issuecomment-322965461
 find_package(PkgConfig)
 # pkg_check_modules(CHECK REQUIRED check)
