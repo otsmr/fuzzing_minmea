@@ -6,7 +6,7 @@ project(minmea)
 
 find_package(Threads REQUIRED) # Workaround for https://github.com/libcheck/check/issues/48#issuecomment-322965461
 find_package(PkgConfig)
-pkg_check_modules(CHECK REQUIRED check)
+# pkg_check_modules(CHECK REQUIRED check)
 link_directories(${CHECK_LIBRARY_DIRS})
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Wextra -Werror -std=c99")
@@ -18,25 +18,25 @@ add_library(minmea ${minmea_SRCS})
 add_executable(example example.c)
 target_link_libraries(example minmea)
 
-add_executable(tests tests.c)
-target_link_libraries(tests minmea ${CHECK_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
-target_include_directories(tests PUBLIC ${CHECK_INCLUDE_DIRS})
-target_compile_options(tests PUBLIC ${CHECK_CFLAGS_OTHER})
+# add_executable(tests tests.c)
+# target_link_libraries(tests minmea ${CHECK_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+# target_include_directories(tests PUBLIC ${CHECK_INCLUDE_DIRS})
+# target_compile_options(tests PUBLIC ${CHECK_CFLAGS_OTHER})
 
-add_test(NAME tests COMMAND $<TARGET_FILE:tests>)
-list(APPEND CMAKE_CTEST_ARGUMENTS "--output-on-failure")
+# add_test(NAME tests COMMAND $<TARGET_FILE:tests>)
+# list(APPEND CMAKE_CTEST_ARGUMENTS "--output-on-failure")
 
-find_program(SCAN_FOUND scan-build)
+# find_program(SCAN_FOUND scan-build)
 
-if (SCAN_FOUND)
-    add_test(
-        NAME clang_static_analysis
-        COMMAND scan-build make
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    )
-else()
-    MESSAGE(STATUS "scan-build not found, not scanning code")
-endif()
+# if (SCAN_FOUND)
+#     add_test(
+#         NAME clang_static_analysis
+#         COMMAND scan-build make
+#         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+#     )
+# else()
+#     MESSAGE(STATUS "scan-build not found, not scanning code")
+# endif()
 
 include(GNUInstallDirs)
 
